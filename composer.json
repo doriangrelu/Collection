@@ -1,0 +1,23 @@
+{
+  "name": "dorian/collection",
+  "description": "\"Impl\u0000mentation du concept de Collection\"",
+  "type": "library",
+  "require-dev": {
+    "phpunit/phpunit": "^6.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dorian\\Collection\\": "src",
+      "Tests\\Framework\\":"tests"
+    }
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dorian GRELU",
+      "email": "doriangrelu839@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {}
+}
