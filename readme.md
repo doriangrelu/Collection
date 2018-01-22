@@ -25,9 +25,21 @@ composer require dorian/collection
 ## 3. Utilisation
 1. Contexte
 
-    Il est impératif d'utiliser *l'autoloader* de **compsoer**:
+    Il est impératif d'utiliser *l'autoloader* de **composer**:
     
-    `require '/vendor/autoload.php';`
+    Dans un premier temps il est donc necessaire d'initialiser composer via la commande
+     `composer init`. Cette commande permet l'initialisation d'un projet utilisant ce gestionnaire de dépendance.
+    Il faut donc ensuite executer la commande suivante:
+    
+    ```
+    composer require dorian/collection
+    ```
+    
+    Il faut ensuite inclre l'autloader de *composer* en intégrant dans votre fichier **PHP**:
+    
+    ```
+    require '/vendor/autoload.php';
+    ```
 
 2. Création d'une nouvelle Collection simple sans paramètre:
 
@@ -48,3 +60,29 @@ composer require dorian/collection
     */
     ```
     
+    Le constructeur de la Class **Collection** prends peut prendre deux tableaux en 
+    paramètre. 
+    
+    ```php
+    /**
+    * Collection constructor.
+    * @param array $array
+    * @param array|null $params
+    */
+    public function __construct(?array $array = [], ?array $params=[]);
+    ```    
+    
+    **Le premier** paramètre `$array` peut créer une collection à partie d'un tableau existant.
+    
+    **Le second** paramètre `$params` prends en paramètres les différents paramètres 
+    comme le type d'objets contenu dans la collection, ou bien si l'on veut activer l'auto-sort.
+    Voici la structure du tableau de paramètres: 
+    
+    ```php
+    private $params = [
+       "isJson" => false, //Création de la collection à partir d'une chaine json
+       "sorted" => false, //auto-sort désactivé par défaut 
+       "comparable" => false, //Trier des éléments de type Comparable
+       "type" => null //Type d'éelements de la collection
+     ];
+    ```
