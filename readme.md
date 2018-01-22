@@ -1,8 +1,8 @@
-#Collection
+# Collection
 
 ----------------------------------
 
-##1. Description
+## 1. Description
 
 L'object Collection hérite de la logique des collections d'objets communs à différents langages comme JAVA, C# etc...
 L'avantage d'utiliser ce type d'objet est de pouvoir appliquer une certaine logique, comme le classement, et pourquoi pas la pile et la file de priorité.
@@ -12,7 +12,7 @@ De plus le trie effectué sur la Collection utilise l'algorithme Quick Sort qui 
 
 ---------------------------------
 
-##2. Installation
+## 2. Installation
 
 Pour utiliser cette librairie, il suffit d'utiliser composer:
 
@@ -22,7 +22,7 @@ composer require dorian/collection
 
 ---------------------------------
 
-##3. Utilisation
+## 3. Utilisation
 1. Contexte
 
     Il est impératif d'utiliser *l'autoloader* de **compsoer**:
