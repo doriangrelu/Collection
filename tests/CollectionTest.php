@@ -1,4 +1,5 @@
 <?php
+
 use Dorian\Collection\CollectionException;
 use Dorian\Collection\Collection;
 use Tests\Framework\Objects\Comparable1;
@@ -24,7 +25,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     public function testCreateCollectionFromArray()
     {
         $array = ["test", "test"];
-        $collection = new Collection($array);
+        $collection = new Collection();
+        $collection->addArray($array);
         $this->assertEquals(2, $collection->size());
     }
 
@@ -33,7 +35,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         $object = new stdClass();
         $object->test = "dorian";
         $array = [new stdClass(), $object];
-        $collection = new Collection($array);
+        $collection = new Collection();
+        $collection->addArray($array);
         $collection->removeObject($object);
         $this->assertEquals(1, $collection->size());
         $collection->remove(0);
@@ -50,8 +53,9 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
             new Comparable2(),
             new Comparable1()
         ];
-        $collection = new Collection($array);
-        $collection->sortComparableELements();
+        $collection = new Collection();
+        $collection->addArray($array);
+        $collection->sort(true);
         $this->assertEquals($arraySorted, $collection->toArray());
     }
 
@@ -62,9 +66,10 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
             "test",
             new Comparable2()
         ];
-        $collection = new Collection($array);
+        $collection = new Collection();
+        $collection->addArray($array);
         $this->expectException(CollectionException::class);
-        $collection->sortComparableELements();
+        $collection->sort(true);
 
     }
 
@@ -73,7 +78,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     {
         $array = ["test", "test", "test"];
         $keys = [0, 1];
-        $collection = new Collection($array);
+        $collection = new Collection();
+        $collection->addArray($array);
         $collection->remove(1);
         $this->assertEquals($keys, $collection->getKeys());
     }
@@ -82,7 +88,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     {
         $counter = 0;
         $array = ["test", "test", "test"];
-        $collection = new Collection($array);
+        $collection = new Collection();
+        $collection->addArray($array);
         foreach ($collection as $value) {
             $counter++;
         }
@@ -92,7 +99,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     public function testArrayAccess()
     {
         $array = ["test1", "test2", "test3"];
-        $collection = new Collection($array);
+        $collection = new Collection();
+        $collection->addArray($array);
         $this->assertEquals("test1", $collection[0]);
         $this->assertEquals("test3", $collection[2]);
     }
@@ -100,7 +108,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     public function testUsingBaseFunctionCollection()
     {
         $array = ["test1", "test2", "test3"];
-        $collection = new Collection($array);
+        $collection = new Collection();
+        $collection->addArray($array);
         $this->assertEquals(3, $collection->size());
         $this->assertEquals("test2", $collection->getObject("test2"));
         $this->assertFalse($collection->contains("test8"));
@@ -123,15 +132,16 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
             new Comparable2(),
             new Comparable1()
         ];
-        $collection = new Collection($array, ["sorted" => true, "comparable" => true, "type" => TypeCommun::class]);
+        $collection = new Collection(["sorted" => true, "comparable" => true, "type" => TypeCommun::class]);
+        $collection->addArray($array);
         $this->assertEquals($arraySorted, $collection->toArray());
     }
 
     public function testTypesCollection()
     {
-        $collection = new Collection([], ["sorted" => true, "type" => "datetime"]);
-        $collectionString = new Collection([], ["type" => "string"]);
-        $collectionComparable1 = new Collection([], ["type" => Comparable1::class, "comparable" => true]);
+        $collection = new Collection(["sorted" => true, "type" => "datetime"]);
+        $collectionString = new Collection(["type" => "string"]);
+        $collectionComparable1 = new Collection(["type" => Comparable1::class, "comparable" => true]);
         $collectionComparable1->add(new Comparable1());
         $this->assertEquals(1, $collectionComparable1->size());
         $collectionString->add("test");
@@ -149,7 +159,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
             new Comparable1(),
             new Comparable1()
         ];
-        $collection = new Collection([], ["sorted" => true, "comparable" => true]);
+        $collection = new Collection(["sorted" => true, "comparable" => true]);
         $collection->add(new Comparable1());
         $collection->add(new Comparable2());
         $collection->add(new Comparable1());

@@ -66,10 +66,9 @@ composer require dorian/collection
     ```php
     /**
     * Collection constructor.
-    * @param array $array
     * @param array|null $params
     */
-    public function __construct(?array $array = [], ?array $params=[]);
+    public function __construct(?array $params=[]);
     ```    
     
     **Le premier** paramètre `$array` peut créer une collection à partie d'un tableau existant.
@@ -87,124 +86,74 @@ composer require dorian/collection
      ];
     ```
     
-    Signature des méthodes disponibles de la class:
+3. Création d'une collection Auto-sort
+
+    Il existe la possibilité de créer une collection auto-triée. De la sorte à ce que lors
+    de l'ajout ou modification d'un élément dans la collection, cette dernière soit capable 
+    de placer l'élément dans la bonne case. La collection sera triée dans l'ordre croissant. 
+    Si la collection est composée d'élements de type comparable, cette dernière sera triée par le biais de l'algorithme **quick sort**.
     
     ```php
-        /**
-         * Initialise les paramètres à tous moment
-         * @param array $params
-         */
-        public function setParams(array $params);
-        
-        /**
-         * Tri la collection en fonction des paramètres qui lui sont données
-         * @throws CollectionException
-         */
-        public function sortCollection(): self;
+    //Collection auto-triée composée d'éléments Mixed
+        $collection = new Collection([
+           "sorted"=>true,
+           "comparable"=>false
+        ]);
     
-        /**
-         * Vérifie si la collection contient l'objet passé en paramètre
-         * @param $object
-         * @return bool
-         */
-        public function contains($object): bool; 
-    
-        /**
-         * Ajoute un objet à la collection en effectuant des vérification en fonction des paramètres
-         * @param $object
-         */
-        public function add($object);
-    
-        /**
-         * Modifie un objet de la collection si ce dernier n'existe pas une Exception est levee
-         * @param int $key Clef de la valeur à modifier
-         * @param $value Valeur à insérer
-         * @throws CollectionException La clef n'est pas définie
-         */
-        public function set(int $key, $value);
-        /**
-         * @param $object
-         * @return int
-         * @throws CollectionException
-         */
-        public function getObjectPosition($object): int;
-        /**
-         * Modifie la valeur d'un objet si il est présent dans la collection
-         * @param $object
-         * @throws CollectionException L'objet n'existe pas dans la collection
-         */
-        public function setObject($object);
-    
-        /**
-         * @param $key
-         * @return bool
-         */
-        public function exist($key): bool;
-        /**
-         * @param $key
-         * @return mixed|null
-         */
-        public function get($key);
-        /**
-         * @return int
-         */
-        public function size(): int;
-    
-        /**
-         * @return Collection
-         * @throws CollectionException
-         */
-        public function sortComparableELements(): self;
-    
-        /**
-         * @param $object
-         * @return mixed|null
-         */
-        public function getObject($object);
-    
-        /**
-         * @param $object
-         * @throws CollectionException
-         */
-        public function removeObject($object);
-    
-        public function toJson(): string;
-    
-    
-        public function setListAttributesFromJson(string $json): void;
-    
-    
-        /**
-         * @return array
-         */
-        public function toArray(): array;
-    
-        /**
-         * @return array
-         */
-        public function getKeys();
-    
-        /**
-         * @param $object
-         * @return false|int|string
-         */
-        public function indexOf($object);
-    
-        /**
-         * Return a clone about Collection
-         * @return Collection
-         */
-        public function clone(): Collection;
-    
-        /**
-         * Clear collection
-         */
-        public function removeAll();
-    
-        /**
-         * @param $key
-         * @throws CollectionException
-         */
-        public function remove($key);
+    //Collection auto-triée composée d'éléments Comparable
+        $collection = new Collection([], [
+           "sorted"=>true,
+           "comparable"=>true
+        ]);
     ```
+    
+    Pour que des objets soient de type Comparable il suffit d'implémenter l'interface 
+    **Comparable** imposant la définition de la méthode **compareTo**. 
+    
+    Voici la signature de la méthode:
+    
+    ```php
+       /**
+       * Doit retourner:
+       * -1 si l'élement courant est plus petit
+       * 0 si lesdeux éléments sont égaux
+       * 1 si l'élement courant est plus grand
+       **/
+       public function compareTo($object):int
+    ``` 
+    
+4. Trie d'une collection non auto-triée
+
+    Il est possible de trier une collection si cette dernière ne l'est pas de manière 
+    automatique. 
+    
+    ```php
+        $collection = new Collection();
+        $collection->add(10);
+        $collection->add(1);
+        $collection->add(5);
+        $collection->sort(); //trie manuel de la collection
+    ```
+    
+    Il y a possibilité de forcer le tri d'une collection classique par le biais d'éléments comparables.
+    
+    ```php
+            $collection = new Collection();
+            $collection->add(new Object1());
+            $collection->add(new Object2());
+            $collection->add(new Object3());
+            $collection->sort(true); //trie manuel de la collection
+    ```
+     
+    Il suffit de donner la valeur true à la méthode sort qui forcera le trie par le biais de comparable. 
+    Si le type comparable est définit de bas eil n'est pas nécéssaire de mettre ce paramètre à true. 
+   
+   ```php
+               $collection = new Collection(["comparable"=>true]);
+               $collection->add(new Object1());
+               $collection->add(new Object2());
+               $collection->add(new Object3());
+               $collection->sort(true); //trie manuel de la collection
+   ```
+    
     

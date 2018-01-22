@@ -22,7 +22,7 @@ class Collection implements \ArrayAccess, \Iterator
     /**
      * @var array|null
      */
-    private $array;
+    private $array=[];
 
     /**
      * Liste des paramètres disponibles
@@ -35,15 +35,24 @@ class Collection implements \ArrayAccess, \Iterator
         "type" => null
     ];
 
+
     /**
      * Collection constructor.
-     * @param array $array
      * @param array|null $params
+     * @internal param array $array
      */
-    public function __construct($array = [], ?array $params = [])
+    public function __construct(?array $params = [])
     {
         $this->makeParams($params);
-        $this->array = $this->initialiseFromJsonString($array);
+        $this->rewind();
+    }
+
+    /**
+     * @param array $array
+     */
+    public function addArray(array $array)
+    {
+        $this->array = array_merge($this->array, $array);
         $this->sortCollection();
         $this->rewind();
     }
@@ -103,9 +112,21 @@ class Collection implements \ArrayAccess, \Iterator
      * Tri la collection en fonction des paramètres qui lui sont données
      * @throws CollectionException
      */
-    public function sortCollection(): self
+    private function sortCollection(): self
     {
         if ($this->params["sorted"]) {
+            $this->sort();
+        }
+        return $this;
+    }
+
+    /**
+     * @param bool $comparable
+     * @throws \Dorian\Collection\CollectionException
+     */
+    public function sort(bool $comparable = false)
+    {
+        if (!$comparable) {
             if ($this->params["comparable"]) {
                 $this->sortComparableELements();
             } else {
@@ -113,8 +134,9 @@ class Collection implements \ArrayAccess, \Iterator
                     throw new CollectionException("Can't execute sort on this collection");
                 }
             }
+        } else {
+            $this->sortComparableELements();
         }
-        return $this;
     }
 
     /**
@@ -266,7 +288,7 @@ class Collection implements \ArrayAccess, \Iterator
      * @return Collection
      * @throws CollectionException
      */
-    public function sortComparableELements(): self
+    private function sortComparableELements(): self
     {
         $newArray = $this->quick_sort($this->array);
         $this->array = $newArray;
