@@ -405,7 +405,9 @@ class Collection implements \ArrayAccess, \Iterator
     public function clone(): Collection
     {
         $newArray = $this->array;
-        return new Collection($newArray);
+        $collection = new Collection($this->params);
+        $collection->addArray($newArray);
+        return $collection;
     }
 
     /**

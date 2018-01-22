@@ -155,5 +155,36 @@ composer require dorian/collection
        $collection->add(new Object3());
        $collection->sort(true); //trie manuel de la collection
    ```
+   
+5. Valorisation d'une collection
+
+    Il est très simple de valoriser une collection, et plusieurs méthodes peuvent être utilisées.
+    
+    ```php
+       $collection =  new Collection(["type"=>"string"]);
+       $collection->add("Dorian");
+       $collection->add("Michel");
+       $collection->add("Samuel");
+    
+       //Vérifier si la collection contient un objet
+       $collection->contains("Dorian");
+    
+       //récupérer les valeurs
+       $collection->getObject("Samuel");
+       $collection->get(2);
+    
+       //Vérifier si une clef existe
+       $collection->exist(0);
+    
+       //Suppression
+       $collection->removeObject("Dorian");
+       $collection->remove(1);
+       $collection->removeAll();
+    
+       //Clonage
+       $collectionClonee = $collection->clone();
+ 
+    ```
+    
     
     
