@@ -138,22 +138,22 @@ composer require dorian/collection
     Il y a possibilité de forcer le tri d'une collection classique par le biais d'éléments comparables.
     
     ```php
-            $collection = new Collection();
-            $collection->add(new Object1());
-            $collection->add(new Object2());
-            $collection->add(new Object3());
-            $collection->sort(true); //trie manuel de la collection
+       $collection = new Collection();
+       $collection->add(new Object1());
+       $collection->add(new Object2());
+       $collection->add(new Object3());
+       $collection->sort(true); //trie manuel de la collection
     ```
      
     Il suffit de donner la valeur true à la méthode sort qui forcera le trie par le biais de comparable. 
     Si le type comparable est définit de bas eil n'est pas nécéssaire de mettre ce paramètre à true. 
    
    ```php
-               $collection = new Collection(["comparable"=>true]);
-               $collection->add(new Object1());
-               $collection->add(new Object2());
-               $collection->add(new Object3());
-               $collection->sort(true); //trie manuel de la collection
+       $collection = new Collection(["comparable"=>true]);
+       $collection->add(new Object1());
+       $collection->add(new Object2());
+       $collection->add(new Object3());
+       $collection->sort(true); //trie manuel de la collection
    ```
     
     
