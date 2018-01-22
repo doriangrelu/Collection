@@ -14,6 +14,8 @@ use Dorian\Collection\Comparable;
 class Collection implements \ArrayAccess, \Iterator
 {
 
+    private $reference;
+
     /**
      * @var int Current element
      */
@@ -22,7 +24,7 @@ class Collection implements \ArrayAccess, \Iterator
     /**
      * @var array|null
      */
-    private $array=[];
+    private $array = [];
 
     /**
      * Liste des paramètres disponibles
@@ -43,8 +45,14 @@ class Collection implements \ArrayAccess, \Iterator
      */
     public function __construct(?array $params = [])
     {
+        $this->reference = uniqid("ref");
         $this->makeParams($params);
         $this->rewind();
+    }
+
+    public function getReference()
+    {
+        return $this->reference;
     }
 
     /**

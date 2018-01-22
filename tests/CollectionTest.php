@@ -167,6 +167,22 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
 
     }
 
+    public function testClonage()
+    {
+        $array = [
+            "test1",
+            "test2"
+        ];
+        $collection = new Collection();
+        $collection->addArray($array);
+        $collectionClonee = $collection->clone();
+        $this->assertNotSame($collection, $collectionClonee);
+        $collection->removeAll();
+        $this->assertEquals($array, $collectionClonee->toArray());
+        $this->assertNotEquals($collectionClonee->getReference(), $collection->getReference());
+        $this->assertNotSame($collection, $collectionClonee);
+    }
+
     public function testCreateCollectionFromJson()
     {
         $array = ["test1", "test2"];
