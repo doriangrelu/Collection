@@ -83,6 +83,128 @@ composer require dorian/collection
        "isJson" => false, //Création de la collection à partir d'une chaine json
        "sorted" => false, //auto-sort désactivé par défaut 
        "comparable" => false, //Trier des éléments de type Comparable
-       "type" => null //Type d'éelements de la collection
+       "type" => null //Type d'éléments de la collection
      ];
     ```
+    
+    Signature des méthodes disponibles de la class:
+    
+    ```php
+        /**
+         * Initialise les paramètres à tous moment
+         * @param array $params
+         */
+        public function setParams(array $params);
+        
+        /**
+         * Tri la collection en fonction des paramètres qui lui sont données
+         * @throws CollectionException
+         */
+        public function sortCollection(): self;
+    
+        /**
+         * Vérifie si la collection contient l'objet passé en paramètre
+         * @param $object
+         * @return bool
+         */
+        public function contains($object): bool; 
+    
+        /**
+         * Ajoute un objet à la collection en effectuant des vérification en fonction des paramètres
+         * @param $object
+         */
+        public function add($object);
+    
+        /**
+         * Modifie un objet de la collection si ce dernier n'existe pas une Exception est levee
+         * @param int $key Clef de la valeur à modifier
+         * @param $value Valeur à insérer
+         * @throws CollectionException La clef n'est pas définie
+         */
+        public function set(int $key, $value);
+        /**
+         * @param $object
+         * @return int
+         * @throws CollectionException
+         */
+        public function getObjectPosition($object): int;
+        /**
+         * Modifie la valeur d'un objet si il est présent dans la collection
+         * @param $object
+         * @throws CollectionException L'objet n'existe pas dans la collection
+         */
+        public function setObject($object);
+    
+        /**
+         * @param $key
+         * @return bool
+         */
+        public function exist($key): bool;
+        /**
+         * @param $key
+         * @return mixed|null
+         */
+        public function get($key);
+        /**
+         * @return int
+         */
+        public function size(): int;
+    
+        /**
+         * @return Collection
+         * @throws CollectionException
+         */
+        public function sortComparableELements(): self;
+    
+        /**
+         * @param $object
+         * @return mixed|null
+         */
+        public function getObject($object);
+    
+        /**
+         * @param $object
+         * @throws CollectionException
+         */
+        public function removeObject($object);
+    
+        public function toJson(): string;
+    
+    
+        public function setListAttributesFromJson(string $json): void;
+    
+    
+        /**
+         * @return array
+         */
+        public function toArray(): array;
+    
+        /**
+         * @return array
+         */
+        public function getKeys();
+    
+        /**
+         * @param $object
+         * @return false|int|string
+         */
+        public function indexOf($object);
+    
+        /**
+         * Return a clone about Collection
+         * @return Collection
+         */
+        public function clone(): Collection;
+    
+        /**
+         * Clear collection
+         */
+        public function removeAll();
+    
+        /**
+         * @param $key
+         * @throws CollectionException
+         */
+        public function remove($key);
+    ```
+    
